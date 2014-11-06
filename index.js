@@ -76,15 +76,11 @@ var VText = require('vtree/vtext');
 var vnode = new VNode('div', {
   type: 'text',
   autofocus: true,
+  checked: true,
+  download: true,
   'ev-hook': 'hook',
-  attributes: {
-    d: 1,
-    cy: 10
-  },
-  style: {
-    width: '10px',
-    background: 'blue'
-  }
+  attributes: 13,
+  style: 13
 }, [ new VNode('br'), new VText('div') ]);
 
 var str = module.exports(vnode);

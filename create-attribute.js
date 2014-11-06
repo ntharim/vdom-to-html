@@ -26,20 +26,32 @@ module.exports = createAttribute;
 function createAttribute(name, value, isAttribute) {
   var attrType = properties[name];
   if (attrType) {
-    var attrName = (attributeNames[name] || name).toLowerCase();
+    if (shouldSkip(name, value)) return '';
+    name = (attributeNames[name] || name).toLowerCase();
     // for BOOLEAN `value` only has to be truthy
     // for OVERLOADED_BOOLEAN `value` has to be === true
-    if ((attrType === types.BOOLEAN && value) ||
+    if ((attrType === types.BOOLEAN) ||
         (attrType === types.OVERLOADED_BOOLEAN && value === true)) {
-      return escape(attrName);
+      return escape(name);
     }
-    return prefixAttribute(attrName) + escape(value) + '"';
+    return prefixAttribute(name) + escape(value) + '"';
   } else if (isCustomAttribute(name) || isAttribute) {
     if (value == null) return '';
     return prefixAttribute(name) + escape(value) + '"';
   }
   // return null if `name` is neither a valid property nor an attribute
   return null;
+}
+
+/**
+ * Should skip false boolean attributes.
+ */
+
+function shouldSkip(name, value) {
+  attrType = properties[name];
+  return value == null ||
+    (attrType === types.BOOLEAN && !value) ||
+    (attrType === types.OVERLOADED_BOOLEAN && value === false);
 }
 
 /**

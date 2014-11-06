@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "author": "Nathan Tran <ntran013@gmail.com>",
   "license": "MIT",
-  "repository": "ntran13/vdom-to-html",
+  "repository": "nthtran/vdom-to-html",
   "dependencies": {
     "escape-html": "^1.0.1",
     "vtree": "0.0.21",
