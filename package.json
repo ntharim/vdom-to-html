@@ -1,0 +1,23 @@
+{
+  "name": "vdom-to-html",
+  "description": "",
+  "version": "0.0.0",
+  "author": "Nathan Tran <ntran013@gmail.com>",
+  "license": "MIT",
+  "repository": "ntran13/vdom-to-html",
+  "dependencies": {
+    "escape-html": "^1.0.1",
+    "vtree": "0.0.21",
+    "xtend": "^4.0.0"
+  },
+  "devDependencies": {
+    "istanbul": "0",
+    "mocha": "1"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot"
+  },
+  "keywords": []
+}

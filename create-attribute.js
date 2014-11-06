@@ -1,0 +1,61 @@
+var escape = require('escape-html');
+var propConfig = require('./property-config');
+var types = propConfig.attributeTypes;
+var properties = propConfig.properties;
+var attributeNames = propConfig.attributeNames;
+
+var prefixAttribute = memoizeString(function (name) {
+  return escape(name) + '="';
+});
+
+var isCustomAttribute = RegExp.prototype.test.bind(
+  /^(data|aria)-[a-z_][a-z\d_.\-]*$/
+);
+
+module.exports = createAttribute;
+
+/**
+ * Create attribute string.
+ *
+ * @param {String} name The name of the property or attribute
+ * @param {*} value The value
+ * @param {Boolean} [isAttribute] Denotes whether `name` is an attribute.
+ * @return {?String} Attribute string || null if not a valid property or custom attribute.
+ */
+
+function createAttribute(name, value, isAttribute) {
+  var attrType = properties[name];
+  if (attrType) {
+    var attrName = (attributeNames[name] || name).toLowerCase();
+    // for BOOLEAN `value` only has to be truthy
+    // for OVERLOADED_BOOLEAN `value` has to be === true
+    if ((attrType === types.BOOLEAN && value) ||
+        (attrType === types.OVERLOADED_BOOLEAN && value === true)) {
+      return escape(attrName);
+    }
+    return prefixAttribute(attrName) + escape(value) + '"';
+  } else if (isCustomAttribute(name) || isAttribute) {
+    if (value == null) return '';
+    return prefixAttribute(name) + escape(value) + '"';
+  }
+  // return null if `name` is neither a valid property nor an attribute
+  return null;
+}
+
+/**
+ * Memoizes the return value of a function that accepts one string argument.
+ *
+ * @param {function} callback
+ * @return {function}
+ */
+
+function memoizeString(callback) {
+  var cache = {};
+  return function(string) {
+    if (cache.hasOwnProperty(string)) {
+      return cache[string];
+    } else {
+      return cache[string] = callback.call(this, string);
+    }
+  };
+}
