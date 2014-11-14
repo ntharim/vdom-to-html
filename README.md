@@ -8,7 +8,7 @@
 [![Dependency Status][david-image]][david-url]
 [![License][license-image]][license-url]
 
-Turn [virtual-dom](https://github.com/Matt-Esch/virtual-dom/) nodes into HTML.
+Turn [virtual-dom](https://github.com/Matt-Esch/virtual-dom/) nodes into HTML
 
 ## Installation
 
