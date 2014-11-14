@@ -5,6 +5,12 @@
   "author": "Nathan Tran <ntran013@gmail.com>",
   "license": "MIT",
   "repository": "nthtran/vdom-to-html",
+  "keywords": [
+    "virtual-dom",
+    "html",
+    "stringify",
+    "vtree"
+  ],
   "dependencies": {
     "escape-html": "^1.0.1",
     "vtree": "0.0.22",
