@@ -7,12 +7,13 @@ var voidElements = require('./void-elements');
 
 module.exports = toHTML;
 
-function toHTML(node) {
+function toHTML(node, parent) {
   if (!node) return '';
 
   if (isVNode(node)) {
     return openTag(node) + tagContent(node) + closeTag(node);
   } else if (isVText(node)) {
+    if (parent && parent.tagName === 'script') return String(node.text);
     return escape(String(node.text));
   }
 
@@ -59,7 +60,7 @@ function tagContent(node) {
     if (node.children && node.children.length) {
       for (var i = 0, l = node.children.length; i<l; i++) {
         var child = node.children[i];
-        ret += toHTML(child);
+        ret += toHTML(child, node);
       }
     }
     return ret;
@@ -69,20 +70,3 @@ function tagContent(node) {
 function closeTag(node) {
   return voidElements[node.tagName] ? '' : '</' + node.tagName + '>';
 }
-
-var VNode = require('vtree/vnode');
-var VText = require('vtree/vtext');
-
-var vnode = new VNode('div', {
-  type: 'text',
-  autofocus: true,
-  checked: true,
-  download: true,
-  'ev-hook': 'hook',
-  attributes: 13,
-  style: 13
-}, [ new VNode('br'), new VText('div') ]);
-
-var str = module.exports(vnode);
-
-console.log(str);

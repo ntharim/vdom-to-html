@@ -12,9 +12,6 @@ var types = {
  *
  * Taken from https://github.com/facebook/react/blob/v0.12.0/src/browser/ui/dom/HTMLDOMPropertyConfig.js
  *
- * Differences:
- * - `autofocus` uncommented
- * - everthing except for BOOLEAN and OVERLOADED_BOOLEAN changed to `true`
  */
 
 var properties = {

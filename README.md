@@ -8,6 +8,24 @@
 [![Dependency Status][david-image]][david-url]
 [![License][license-image]][license-url]
 
+Turn [virtual-dom](https://github.com/Matt-Esch/virtual-dom/) nodes into HTML.
+
+## Installation
+
+```sh
+npm install --save vdom-to-html
+```
+
+## Usage
+
+```js
+var VNode = require('vtree/vnode');
+var toHTML = require('vdom-to-html');
+
+toHTML(new VNode('input', { className: 'name', type: 'text' }));
+// => '<input class="name" type="text">'
+```
+
 [npm-image]: https://img.shields.io/npm/v/vdom-to-html.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/vdom-to-html
 [github-image]: http://img.shields.io/github/release/nthtran/vdom-to-html.svg?style=flat-square
