@@ -1,6 +1,7 @@
 
-var VNode = require('vtree/vnode');
-var VText = require('vtree/vtext');
+var VNode = require('virtual-dom/vnode/vnode');
+var VText = require('virtual-dom/vnode/vtext');
+var partial = require('vdom-thunk');
 var assert = require('assert');
 var toHTML = require('..');
 
@@ -113,7 +114,7 @@ describe('toHTML()', function () {
     assert(toHTML(node) === '<circle cx="60" cy="60" ></circle>');
   });
 
-  it('it should render nested children', function() {
+  it('it should render nested children', function () {
     var node = new VNode('div', null, [
       new VNode('div', { id: 'a-div' }, [
         new VNode('div', null, [new VText('HI!')])
@@ -132,17 +133,25 @@ describe('toHTML()', function () {
     assert(toHTML(node) === '<div data-&quot;hi&quot;="&quot;hello&quot;">&lt;span&gt;sup&lt;/span&gt;</div>');
   });
 
-  it('should not encode script tag contents', function() {
+  it('should not encode script tag contents', function () {
     var node = new VNode('div', null, [
       new VNode('script', null, [new VText('console.log("zzz");')])
     ]);
     assert(toHTML(node) === '<div><script>console.log("zzz");</script></div>');
   });
 
-  it('should render `innerHTML`', function() {
+  it('should render `innerHTML`', function () {
     var node = new VNode('div', {
       innerHTML: '<span>sup</span>'
     });
     assert(toHTML(node) === '<div><span>sup</span></div>');
+  });
+
+  it('should render thunks', function () {
+    var fn = function fn(text) {
+      return new VNode('span', null, [new VText(text)]);
+    };
+    var node = partial(fn, 'hello');
+    assert(toHTML(node) === '<span>hello</span>');
   });
 });

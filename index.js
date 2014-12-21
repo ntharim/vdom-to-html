@@ -1,7 +1,8 @@
 var escape = require('escape-html');
 var extend = require('xtend');
-var isVNode = require('vtree/is-vnode');
-var isVText = require('vtree/is-vtext');
+var isVNode = require('virtual-dom/vnode/is-vnode');
+var isVText = require('virtual-dom/vnode/is-vtext');
+var isThunk = require('virtual-dom/vnode/is-thunk');
 var createAttribute = require('./create-attribute');
 var voidElements = require('./void-elements');
 
@@ -9,6 +10,10 @@ module.exports = toHTML;
 
 function toHTML(node, parent) {
   if (!node) return '';
+
+  if (isThunk(node)) {
+    node = node.render();
+  }
 
   if (isVNode(node)) {
     return openTag(node) + tagContent(node) + closeTag(node);
