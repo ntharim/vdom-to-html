@@ -1,24 +1,25 @@
 
 var VNode = require('virtual-dom/vnode/vnode');
 var VText = require('virtual-dom/vnode/vtext');
+var h = require('virtual-dom/h');
 var partial = require('vdom-thunk');
 var assert = require('assert');
 var toHTML = require('..');
 
 describe('toHTML()', function () {
   it('should not render invalid virtual nodes', function () {
-    assert(toHTML(null) === '');
-    assert(toHTML('hi') === '');
+    assert.equal(toHTML(null), '');
+    assert.equal(toHTML('hi'), '');
   });
 
   it('should render simple HTML', function () {
     var node = new VNode('span');
-    assert(toHTML(node) === '<span></span>');
+    assert.equal(toHTML(node), '<span></span>');
   });
 
   it('should render inner text', function () {
     var node = new VNode('span', null, [new VText('hello')]);
-    assert(toHTML(node) === '<span>hello</span>');
+    assert.equal(toHTML(node), '<span>hello</span>');
   });
 
   it('should convert properties to attributes', function () {
@@ -27,14 +28,14 @@ describe('toHTML()', function () {
       acceptCharset: 'ISO-8859-1',
       accessKey: 'h' // prop to lower case
     });
-    assert(toHTML(node) === '<form class="login" accept-charset="ISO-8859-1" accesskey="h"></form>');
+    assert.equal(toHTML(node), '<form class="login" accept-charset="ISO-8859-1" accesskey="h"></form>');
   });
 
   it('should not render end tags for void elements', function () {
     var node = new VNode('input');
-    assert(toHTML(node) === '<input>');
+    assert.equal(toHTML(node), '<input>');
     node = new VNode('br');
-    assert(toHTML(node) === '<br>');
+    assert.equal(toHTML(node), '<br>');
   });
 
   it('should not render non-standard properties', function () {
@@ -42,7 +43,7 @@ describe('toHTML()', function () {
       'ev-click': function () {},
       'random-prop': 'random!'
     });
-    assert(toHTML(node) === '<web-component></web-component>');
+    assert.equal(toHTML(node), '<web-component></web-component>');
   });
 
   it('should not render null properties', function () {
@@ -50,7 +51,7 @@ describe('toHTML()', function () {
       'className': null,
       'id': null
     });
-    assert(toHTML(node) === '<web-component></web-component>');
+    assert.equal(toHTML(node), '<web-component></web-component>');
   });
 
   it('should render `data-` and `aria-` properties', function () {
@@ -58,7 +59,7 @@ describe('toHTML()', function () {
       'data-click': 'clicked!',
       'aria-labelledby': 'label'
     });
-    assert(toHTML(node) === '<web-component data-click="clicked!" aria-labelledby="label"></web-component>');
+    assert.equal(toHTML(node), '<web-component data-click="clicked!" aria-labelledby="label"></web-component>');
   });
 
   it('should render CSS for style property', function () {
@@ -68,7 +69,7 @@ describe('toHTML()', function () {
         color: 'red'
       }
     });
-    assert(toHTML(node) === '<div style="background: black; color: red;"></div>');
+    assert.equal(toHTML(node), '<div style="background: black; color: red;"></div>');
   });
 
   it('should render boolean properties', function () {
@@ -76,7 +77,7 @@ describe('toHTML()', function () {
       autofocus: true,
       disabled: false
     });
-    assert(toHTML(node) === '<input autofocus>');
+    assert.equal(toHTML(node), '<input autofocus>');
   });
 
   it('should render overloaded boolean properties', function () {
@@ -84,12 +85,12 @@ describe('toHTML()', function () {
       href: '/images/xxx.jpg',
       download: true
     });
-    assert(toHTML(node) === '<a href="/images/xxx.jpg" download></a>');
+    assert.equal(toHTML(node), '<a href="/images/xxx.jpg" download></a>');
     node = new VNode('a', {
       href: '/images/xxx.jpg',
       download: 'sfw'
     });
-    assert(toHTML(node) === '<a href="/images/xxx.jpg" download="sfw"></a>');
+    assert.equal(toHTML(node), '<a href="/images/xxx.jpg" download="sfw"></a>');
   });
 
   it('should render any attributes', function () {
@@ -100,7 +101,7 @@ describe('toHTML()', function () {
         r: "50"
       }
     });
-    assert(toHTML(node) === '<circle cx="60" cy="60" r="50"></circle>');
+    assert.equal(toHTML(node), '<circle cx="60" cy="60" r="50"></circle>');
   });
 
   it('should not render null attributes', function () {
@@ -111,7 +112,7 @@ describe('toHTML()', function () {
         r: null
       }
     });
-    assert(toHTML(node) === '<circle cx="60" cy="60" ></circle>');
+    assert.equal(toHTML(node), '<circle cx="60" cy="60" ></circle>');
   });
 
   it('it should render nested children', function () {
@@ -121,7 +122,7 @@ describe('toHTML()', function () {
       ]),
       new VNode('div', { className: 'just-another-div' })
     ]);
-    assert(toHTML(node) === '<div><div id="a-div"><div>HI!</div></div><div class="just-another-div"></div></div>');
+    assert.equal(toHTML(node), '<div><div id="a-div"><div>HI!</div></div><div class="just-another-div"></div></div>');
   });
 
   it('should encode attribute names/values and text contents', function () {
@@ -130,21 +131,21 @@ describe('toHTML()', function () {
         'data-"hi"': '"hello"'
       }
     }, [new VText('<span>sup</span>')]);
-    assert(toHTML(node) === '<div data-&quot;hi&quot;="&quot;hello&quot;">&lt;span&gt;sup&lt;/span&gt;</div>');
+    assert.equal(toHTML(node), '<div data-&quot;hi&quot;="&quot;hello&quot;">&lt;span&gt;sup&lt;/span&gt;</div>');
   });
 
   it('should not encode script tag contents', function () {
     var node = new VNode('div', null, [
       new VNode('script', null, [new VText('console.log("zzz");')])
     ]);
-    assert(toHTML(node) === '<div><script>console.log("zzz");</script></div>');
+    assert.equal(toHTML(node), '<div><script>console.log("zzz");</script></div>');
   });
 
   it('should render `innerHTML`', function () {
     var node = new VNode('div', {
       innerHTML: '<span>sup</span>'
     });
-    assert(toHTML(node) === '<div><span>sup</span></div>');
+    assert.equal(toHTML(node), '<div><span>sup</span></div>');
   });
 
   it('should render thunks', function () {
@@ -152,6 +153,30 @@ describe('toHTML()', function () {
       return new VNode('span', null, [new VText(text)]);
     };
     var node = partial(fn, 'hello');
-    assert(toHTML(node) === '<span>hello</span>');
+    assert.equal(toHTML(node), '<span>hello</span>');
+  });
+
+  it('should render tag in lowercase', function () {
+    var node = new VNode('SPAN', null, [new VText('hello')]);
+    assert.equal(toHTML(node), '<span>hello</span>');
+  });
+
+  it('should render hyperscript', function () {
+    var node = h('span', null, 'test');
+    assert.equal(toHTML(node), '<span>test</span>');
+  });
+
+  it('should not encode script tag contents, when using hyperscript', function () {
+    var node = h('div', null, [
+      h('script', null, 'console.log("zzz");')
+    ]);
+    assert.equal(toHTML(node), '<div><script>console.log("zzz");</script></div>');
+  });
+
+  it('should not render end tags for void elements, when using hyperscript', function () {
+    var node = h('input');
+    assert.equal(toHTML(node), '<input>');
+    node = h('br');
+    assert.equal(toHTML(node), '<br>');
   });
 });
