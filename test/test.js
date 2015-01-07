@@ -156,6 +156,11 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<span>hello</span>');
   });
 
+  it('should render tag in lowercase', function () {
+    var node = new VNode('SPAN', null, [new VText('hello')]);
+    assert.equal(toHTML(node), '<span>hello</span>');
+  });
+
   it('should render hyperscript', function () {
     var node = h('span', null, 'test');
     assert.equal(toHTML(node), '<span>test</span>');
