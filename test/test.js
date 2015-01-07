@@ -72,6 +72,17 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<div style="background: black; color: red;"></div>');
   });
 
+  it('should convert style property to param-case', function () {
+    var node = new VNode('div', {
+      style: {
+        background: 'black',
+        color: 'red',
+        zIndex: '1'
+      }
+    });
+    assert.equal(toHTML(node), '<div style="background: black; color: red; z-index: 1;"></div>');
+  });
+
   it('should render boolean properties', function () {
     var node = new VNode('input', {
       autofocus: true,

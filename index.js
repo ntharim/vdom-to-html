@@ -3,6 +3,7 @@ var extend = require('xtend');
 var isVNode = require('virtual-dom/vnode/is-vnode');
 var isVText = require('virtual-dom/vnode/is-vtext');
 var isThunk = require('virtual-dom/vnode/is-thunk');
+var paramCase = require('param-case');
 var createAttribute = require('./create-attribute');
 var voidElements = require('./void-elements');
 
@@ -45,7 +46,7 @@ function openTag(node) {
       var css = '';
       value = extend({}, value);
       for (var styleProp in value) {
-        css += styleProp + ': ' + value[styleProp] + '; ';
+        css += paramCase(styleProp) + ': ' + value[styleProp] + '; ';
       }
       value = css.trim();
     }
