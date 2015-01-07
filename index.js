@@ -18,7 +18,7 @@ function toHTML(node, parent) {
   if (isVNode(node)) {
     return openTag(node) + tagContent(node) + closeTag(node);
   } else if (isVText(node)) {
-    if (parent && parent.tagName === 'script') return String(node.text);
+    if (parent && parent.tagName.toLowerCase() === 'script') return String(node.text);
     return escape(String(node.text));
   }
 
@@ -27,7 +27,7 @@ function toHTML(node, parent) {
 
 function openTag(node) {
   var props = node.properties;
-  var ret = '<' + node.tagName;
+  var ret = '<' + node.tagName.toLowerCase();
 
   for (var name in props) {
     var value = props[name];
@@ -73,5 +73,6 @@ function tagContent(node) {
 }
 
 function closeTag(node) {
-  return voidElements[node.tagName] ? '' : '</' + node.tagName + '>';
+  var tag = node.tagName.toLowerCase();
+  return voidElements[tag] ? '' : '</' + tag + '>';
 }
