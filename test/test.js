@@ -126,7 +126,7 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<circle cx="60" cy="60" ></circle>');
   });
 
-  it('it should render nested children', function () {
+  it('should render nested children', function () {
     var node = new VNode('div', null, [
       new VNode('div', { id: 'a-div' }, [
         new VNode('div', null, [new VText('HI!')])
