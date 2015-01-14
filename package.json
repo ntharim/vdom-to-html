@@ -1,7 +1,7 @@
 {
   "name": "vdom-to-html",
   "description": "Turn virtual-dom nodes into HTML",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "author": "Nathan Tran <ntran013@gmail.com>",
   "license": "MIT",
   "repository": "nthtran/vdom-to-html",
