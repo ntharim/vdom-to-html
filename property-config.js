@@ -10,7 +10,7 @@ var types = {
 /**
  * Properties.
  *
- * Taken from https://github.com/facebook/react/blob/v0.12.0/src/browser/ui/dom/HTMLDOMPropertyConfig.js
+ * Taken from https://github.com/facebook/react/blob/847357e42e5267b04dd6e297219eaa125ab2f9f4/src/browser/ui/dom/HTMLDOMPropertyConfig.js
  *
  */
 
@@ -31,7 +31,7 @@ var properties = {
   autoplay: types.BOOLEAN,
   cellPadding: true,
   cellSpacing: true,
-  charSet: true,
+  charset: true,
   checked: types.BOOLEAN,
   classID: true,
   className: true,
@@ -52,8 +52,13 @@ var properties = {
   draggable: true,
   enctype: true,
   form: true,
+  formAction: true,
+  formEncType: true,
+  formMethod: true,
   formNoValidate: types.BOOLEAN,
+  formTarget: true,
   frameBorder: true,
+  headers: true,
   height: true,
   hidden: types.BOOLEAN,
   href: true,
@@ -67,6 +72,8 @@ var properties = {
   list: true,
   loop: types.BOOLEAN,
   manifest: true,
+  marginHeight: true,
+  marginWidth: true,
   max: true,
   maxLength: true,
   media: true,
@@ -117,12 +124,17 @@ var properties = {
   /**
    * Non-standard Properties
    */
-  autocapitalize: true, // Supported in Mobile Safari for keyboard hints
-  autocorrect: true, // Supported in Mobile Safari for keyboard hints
-  itemProp: true, // Microdata: http://schema.org/docs/gs.html
-  itemScope: types.BOOLEAN, // Microdata: http://schema.org/docs/gs.html
-  itemType: true, // Microdata: http://schema.org/docs/gs.html
-  property: true // Supports OG in meta tags
+  // autoCapitalize and autoCorrect are supported in Mobile Safari for
+  // keyboard hints.
+  autocapitalize: true,
+  autocorrect: true,
+  // itemProp, itemScope, itemType are for Microdata support. See
+  // http://schema.org/docs/gs.html
+  itemProp: true,
+  itemScope: types.BOOLEAN,
+  itemType: true,
+  // property is supported for OpenGraph in meta tags.
+  property: true
 };
 
 /**
