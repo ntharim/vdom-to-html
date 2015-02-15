@@ -190,4 +190,9 @@ describe('toHTML()', function () {
     node = h('br');
     assert.equal(toHTML(node), '<br>');
   });
+
+  it('should preserve UTF-8 entities and escape special html characters', function () {
+    var node = h('span', null, '测试&\"\'<>');
+    assert.equal(toHTML(node), '<span>测试&amp;&quot;&#39;&lt;&gt;</span>');
+  });
 });
