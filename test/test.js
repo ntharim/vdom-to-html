@@ -3,7 +3,6 @@ var VNode = require('virtual-dom/vnode/vnode');
 var VText = require('virtual-dom/vnode/vtext');
 var h = require('virtual-dom/h');
 var svg = require('virtual-dom/virtual-hyperscript/svg');
-var svg = require('virtual-dom/virtual-hyperscript/svg');
 var partial = require('vdom-thunk');
 var assert = require('assert');
 var toHTML = require('..');
