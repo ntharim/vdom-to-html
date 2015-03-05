@@ -2,6 +2,7 @@ var escape = require('escape-html');
 var extend = require('xtend');
 var isVNode = require('virtual-dom/vnode/is-vnode');
 var isVText = require('virtual-dom/vnode/is-vtext');
+var isVHook = require('virtual-dom/vnode/is-vhook');
 var isThunk = require('virtual-dom/vnode/is-thunk');
 var paramCase = require('param-case');
 var createAttribute = require('./create-attribute');
@@ -28,6 +29,7 @@ function toHTML(node, parent) {
 
 function openTag(node) {
   var props = node.properties;
+  var hooks = node.hooks;
   var ret = '<' + node.tagName.toLowerCase();
 
   for (var name in props) {
@@ -53,6 +55,14 @@ function openTag(node) {
 
     var attr = createAttribute(name, value);
     if (attr) ret += ' ' + attr;
+  }
+
+  for (var name in hooks) {
+    var hook = hooks[name];
+    if (isVHook(hook)) {
+      var attr = createAttribute(name, hook.value, true);
+      if (attr) ret += ' ' + attr;
+    }
   }
 
   return ret + '>';
