@@ -29,7 +29,6 @@ function toHTML(node, parent) {
 
 function openTag(node) {
   var props = node.properties;
-  var hooks = node.hooks;
   var ret = '<' + node.tagName.toLowerCase();
 
   for (var name in props) {
@@ -53,15 +52,13 @@ function openTag(node) {
       value = css.trim();
     }
 
+    if (isVHook(value)) {
+      ret += ' ' + createAttribute(name, value.value, true);
+      continue;
+    }
+
     var attr = createAttribute(name, value);
     if (attr) ret += ' ' + attr;
-  }
-
-  for (var name in hooks) {
-    var hook = hooks[name];
-    if (isVHook(hook)) {
-      ret += ' ' + createAttribute(name, hook.value, true);
-    }
   }
 
   return ret + '>';

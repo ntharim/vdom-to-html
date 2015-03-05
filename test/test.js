@@ -210,12 +210,4 @@ describe('toHTML()', function () {
     });
     assert.equal(toHTML(node), '<use xlink:href="/abc.jpg"></use>');
   });
-
-  it('should only render valid hooks', function () {
-    var node = svg('svg');
-    node.hooks = {
-      'xlink:href': {}
-    };
-    assert.equal(toHTML(node), '<svg></svg>');
-  });
 });
