@@ -60,8 +60,7 @@ function openTag(node) {
   for (var name in hooks) {
     var hook = hooks[name];
     if (isVHook(hook)) {
-      var attr = createAttribute(name, hook.value, true);
-      if (attr) ret += ' ' + attr;
+      ret += ' ' + createAttribute(name, hook.value, true);
     }
   }
 

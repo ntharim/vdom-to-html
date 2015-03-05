@@ -3,6 +3,7 @@ var VNode = require('virtual-dom/vnode/vnode');
 var VText = require('virtual-dom/vnode/vtext');
 var h = require('virtual-dom/h');
 var svg = require('virtual-dom/virtual-hyperscript/svg');
+var svg = require('virtual-dom/virtual-hyperscript/svg');
 var partial = require('vdom-thunk');
 var assert = require('assert');
 var toHTML = require('..');
@@ -209,5 +210,13 @@ describe('toHTML()', function () {
       'xlink:href': '/abc.jpg'
     });
     assert.equal(toHTML(node), '<use xlink:href="/abc.jpg"></use>');
+  });
+
+  it('should only render valid hooks', function () {
+    var node = svg('svg');
+    node.hooks = {
+      'xlink:href': {}
+    };
+    assert.equal(toHTML(node), '<svg></svg>');
   });
 });
