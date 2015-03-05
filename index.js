@@ -52,7 +52,7 @@ function openTag(node) {
       value = css.trim();
     }
 
-    if (isVHook(value)) {
+    if (isVHook(value) && value.namespace) {
       ret += ' ' + createAttribute(name, value.value, true);
       continue;
     }
