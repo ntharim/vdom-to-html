@@ -2,6 +2,7 @@
 var VNode = require('virtual-dom/vnode/vnode');
 var VText = require('virtual-dom/vnode/vtext');
 var h = require('virtual-dom/h');
+var svg = require('virtual-dom/virtual-hyperscript/svg');
 var partial = require('vdom-thunk');
 var assert = require('assert');
 var toHTML = require('..');
@@ -194,5 +195,27 @@ describe('toHTML()', function () {
   it('should preserve UTF-8 entities and escape special html characters', function () {
     var node = h('span', null, '测试&\"\'<>');
     assert.equal(toHTML(node), '<span>测试&amp;&quot;&#39;&lt;&gt;</span>');
+  });
+
+  it('should render svg with attributes in default namespace', function () {
+    var node = svg('svg', {
+      'viewBox': '0 0 10 10'
+    });
+    assert.equal(toHTML(node), '<svg viewBox="0 0 10 10"></svg>');
+  });
+
+  it('should render svg with attributes in non-default namespace', function () {
+    var node = svg('use', {
+      'xlink:href': '/abc.jpg'
+    });
+    assert.equal(toHTML(node), '<use xlink:href="/abc.jpg"></use>');
+  });
+
+  it('should only render attribute hooks, by checking namespace', function () {
+    var node = svg('use', {
+      'xlink:href': '/abc.jpg'
+    });
+    node.hooks['xlink:href'].namespace = null;
+    assert.equal(toHTML(node), '<use></use>');
   });
 });
