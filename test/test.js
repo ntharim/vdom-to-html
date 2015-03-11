@@ -211,11 +211,8 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<use xlink:href="/abc.jpg"></use>');
   });
 
-  it('should only render attribute hooks, by checking namespace', function () {
-    var node = svg('use', {
-      'xlink:href': '/abc.jpg'
-    });
-    node.hooks['xlink:href'].namespace = null;
-    assert.equal(toHTML(node), '<use></use>');
+  it('should render input value', function () {
+    var node = h('input', { type: 'submit', value: 'add' });
+    assert.equal(toHTML(node), '<input type="submit" value="add">');
   });
 });
