@@ -8,10 +8,6 @@ var prefixAttribute = memoizeString(function (name) {
   return escape(name) + '="';
 });
 
-var isCustomAttribute = RegExp.prototype.test.bind(
-  /^(data|aria)-[a-z_][a-z\d_.\-]*$/
-);
-
 module.exports = createAttribute;
 
 /**
@@ -35,7 +31,7 @@ function createAttribute(name, value, isAttribute) {
       return escape(name);
     }
     return prefixAttribute(name) + escape(value) + '"';
-  } else if (isCustomAttribute(name) || isAttribute) {
+  } else if (isAttribute) {
     if (value == null) return '';
     return prefixAttribute(name) + escape(value) + '"';
   }

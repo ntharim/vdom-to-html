@@ -55,14 +55,6 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<web-component></web-component>');
   });
 
-  it('should render `data-` and `aria-` properties', function () {
-    var node = new VNode('web-component', {
-      'data-click': 'clicked!',
-      'aria-labelledby': 'label'
-    });
-    assert.equal(toHTML(node), '<web-component data-click="clicked!" aria-labelledby="label"></web-component>');
-  });
-
   it('should render CSS for style property', function () {
     var node = new VNode('div', {
       style: {
