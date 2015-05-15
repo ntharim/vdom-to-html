@@ -160,6 +160,18 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<span>hello</span>');
   });
 
+  it('should render widgets', function () {
+    var Widget = function(text) {
+      this.text = text;
+    }
+    Widget.prototype.type = 'Widget';
+    Widget.prototype.render = function() {
+      return new VNode('span', null, [new VText(this.text)]);
+    };
+    var node = new Widget('hello');
+    assert.equal(toHTML(node), '<span>hello</span>');
+  });
+
   it('should render tag in lowercase', function () {
     var node = new VNode('SPAN', null, [new VText('hello')]);
     assert.equal(toHTML(node), '<span>hello</span>');

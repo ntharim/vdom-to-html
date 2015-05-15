@@ -3,6 +3,7 @@ var extend = require('xtend');
 var isVNode = require('virtual-dom/vnode/is-vnode');
 var isVText = require('virtual-dom/vnode/is-vtext');
 var isThunk = require('virtual-dom/vnode/is-thunk');
+var isWidget = require('virtual-dom/vnode/is-widget');
 var softHook = require('virtual-dom/virtual-hyperscript/hooks/soft-set-hook');
 var attrHook = require('virtual-dom/virtual-hyperscript/hooks/attribute-hook');
 var paramCase = require('param-case');
@@ -15,6 +16,10 @@ function toHTML(node, parent) {
   if (!node) return '';
 
   if (isThunk(node)) {
+    node = node.render();
+  }
+
+  if (isWidget(node) && node.render) {
     node = node.render();
   }
 
