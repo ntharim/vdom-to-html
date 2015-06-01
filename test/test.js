@@ -220,4 +220,11 @@ describe('toHTML()', function () {
     var node = h('input', { type: 'submit', value: 'add' });
     assert.equal(toHTML(node), '<input type="submit" value="add">');
   });
+
+  it('should skip properties that are functions', function () {
+    var node = h('div', {
+      toString: function () { return 'Just a div'; }
+    }, 'Test');
+    assert.equal(toHTML(node), '<div>Test</div>');
+  });
 });
