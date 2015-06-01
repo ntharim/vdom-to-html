@@ -42,7 +42,8 @@ describe('toHTML()', function () {
   it('should not render non-standard properties', function () {
     var node = new VNode('web-component', {
       'ev-click': function () {},
-      'random-prop': 'random!'
+      'random-prop': 'random!',
+      toString: function () {}
     });
     assert.equal(toHTML(node), '<web-component></web-component>');
   });

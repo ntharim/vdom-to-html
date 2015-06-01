@@ -20,10 +20,10 @@ module.exports = createAttribute;
  */
 
 function createAttribute(name, value, isAttribute) {
-  var attrType = properties[name];
-  if (attrType) {
+  if (properties.hasOwnProperty(name)) {
     if (shouldSkip(name, value)) return '';
     name = (attributeNames[name] || name).toLowerCase();
+    var attrType = properties[name];
     // for BOOLEAN `value` only has to be truthy
     // for OVERLOADED_BOOLEAN `value` has to be === true
     if ((attrType === types.BOOLEAN) ||
