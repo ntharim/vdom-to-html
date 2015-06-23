@@ -3,6 +3,7 @@ var VNode = require('virtual-dom/vnode/vnode');
 var VText = require('virtual-dom/vnode/vtext');
 var h = require('virtual-dom/h');
 var svg = require('virtual-dom/virtual-hyperscript/svg');
+var SoftSetHook = require('virtual-dom/virtual-hyperscript/hooks/soft-set-hook');
 var partial = require('vdom-thunk');
 var assert = require('assert');
 var toHTML = require('..');
@@ -218,6 +219,10 @@ describe('toHTML()', function () {
 
   it('should render input value', function () {
     var node = h('input', { type: 'submit', value: 'add' });
+    assert.equal(toHTML(node), '<input type="submit" value="add">');
+  });
+  it('should render input value when soft set hook is used', function () {
+    var node = h('input', { type: 'submit', value: new SoftSetHook('add') });
     assert.equal(toHTML(node), '<input type="submit" value="add">');
   });
 });
