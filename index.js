@@ -4,8 +4,7 @@ var isVNode = require('virtual-dom/vnode/is-vnode');
 var isVText = require('virtual-dom/vnode/is-vtext');
 var isThunk = require('virtual-dom/vnode/is-thunk');
 var isWidget = require('virtual-dom/vnode/is-widget');
-var softHook = require('virtual-dom/virtual-hyperscript/hooks/soft-set-hook');
-var attrHook = require('virtual-dom/virtual-hyperscript/hooks/attribute-hook');
+var isHook = require('virtual-dom/vnode/is-vhook');
 var paramCase = require('param-case');
 var createAttribute = require('./create-attribute');
 var voidElements = require('./void-elements');
@@ -58,7 +57,7 @@ function openTag(node) {
       value = css.trim();
     }
 
-    if (value instanceof softHook || value instanceof attrHook) {
+    if (isHook(value)) {
       ret += ' ' + createAttribute(name, value.value, true);
       continue;
     }
