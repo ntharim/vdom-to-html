@@ -19,7 +19,7 @@ npm install --save vdom-to-html
 ## Usage
 
 ```js
-var VNode = require('vtree/vnode');
+var VNode = require('virtual-dom/vnode/vnode');
 var toHTML = require('vdom-to-html');
 
 toHTML(new VNode('input', { className: 'name', type: 'text' }));
