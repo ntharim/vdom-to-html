@@ -14,7 +14,8 @@
   "devDependencies": {
     "istanbul": "0",
     "mocha": "2",
-    "vdom-thunk": "^3.0.0"
+    "vdom-thunk": "^3.0.0",
+    "virtual-dom": "^2.0.0"
   },
   "peerDependencies": {
     "virtual-dom": "^2.0.0"
