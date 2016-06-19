@@ -87,6 +87,15 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<div data-foo="bar" data-num="42"></div>');
   });
 
+  it('should convert data- attributes to param-case', function () {
+    var node = new VNode('div', {
+      dataset: {
+        fooBar: 'baz'
+      }
+    });
+    assert.equal(toHTML(node), '<div data-foo-bar="baz"></div>');
+  });
+
   it('should render boolean properties', function () {
     var node = new VNode('input', {
       autofocus: true,

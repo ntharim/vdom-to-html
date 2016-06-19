@@ -52,7 +52,7 @@ function openTag(node) {
     if (name == 'dataset') {
       value = extend({}, value);
       for (var dataProp in value) {
-        ret += ' ' + createAttribute('data-' + dataProp, value[dataProp], true);
+        ret += ' ' + createAttribute('data-' + paramCase(dataProp), value[dataProp], true);
       }
       continue;
     }
