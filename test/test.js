@@ -77,6 +77,25 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<div style="background: black; color: red; z-index: 1;"></div>');
   });
 
+  it('should render data- attributes for dataset properties', function () {
+    var node = new VNode('div', {
+      dataset: {
+        foo: 'bar',
+        num: 42
+      }
+    });
+    assert.equal(toHTML(node), '<div data-foo="bar" data-num="42"></div>');
+  });
+
+  it('should convert data- attributes to param-case', function () {
+    var node = new VNode('div', {
+      dataset: {
+        fooBar: 'baz'
+      }
+    });
+    assert.equal(toHTML(node), '<div data-foo-bar="baz"></div>');
+  });
+
   it('should render boolean properties', function () {
     var node = new VNode('input', {
       autofocus: true,

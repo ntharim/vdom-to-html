@@ -49,6 +49,14 @@ function openTag(node) {
       continue;
     }
 
+    if (name == 'dataset') {
+      value = extend({}, value);
+      for (var dataProp in value) {
+        ret += ' ' + createAttribute('data-' + paramCase(dataProp), value[dataProp], true);
+      }
+      continue;
+    }
+
     if (name == 'style') {
       var css = '';
       value = extend({}, value);
