@@ -58,12 +58,14 @@ function openTag(node) {
     }
 
     if (name == 'style') {
-      var css = '';
-      value = extend({}, value);
-      for (var styleProp in value) {
-        css += paramCase(styleProp) + ': ' + value[styleProp] + '; ';
+      if(typeof(value) === 'object') {
+        var css = '';
+        value = extend({}, value);
+        for (var styleProp in value) {
+          css += paramCase(styleProp) + ': ' + value[styleProp] + '; ';
+        }
+        value = css.trim();
       }
-      value = css.trim();
     }
 
     if (value instanceof softHook || value instanceof attrHook) {
