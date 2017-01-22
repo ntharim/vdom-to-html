@@ -26,7 +26,9 @@ function toHTML(node, parent) {
   if (isVNode(node)) {
     return openTag(node) + tagContent(node) + closeTag(node);
   } else if (isVText(node)) {
-    if (parent && parent.tagName.toLowerCase() === 'script') return String(node.text);
+    if (parent && (parent.tagName.toLowerCase() === 'script'
+        || parent.tagName.toLowerCase() === 'style'))
+      return String(node.text);
     return escape(String(node.text));
   }
 

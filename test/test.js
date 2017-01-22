@@ -77,6 +77,13 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<div style="background: black; color: red; z-index: 1;"></div>');
   });
 
+  it('should render style element correctly', function(){
+    var node = new VNode('style',{},[
+        new VText(".logo {background-image: url('/mylogo.png');}")
+    ]);
+    assert.equal(toHTML(node),"<style>.logo {background-image: url('/mylogo.png');}</style>");
+  });
+
   it('should render data- attributes for dataset properties', function () {
     var node = new VNode('div', {
       dataset: {
