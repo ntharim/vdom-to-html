@@ -60,12 +60,16 @@ function openTag(node) {
     }
 
     if (name == 'style') {
-      var css = '';
-      value = extend({}, value);
-      for (var styleProp in value) {
-        css += paramCase(styleProp) + ': ' + value[styleProp] + '; ';
+      if (typeof value === 'string') {
+        // do nothing, string style values are good as-is
+      } else {
+        var css = '';
+        value = extend({}, value);
+        for (var styleProp in value) {
+          css += paramCase(styleProp) + ': ' + value[styleProp] + '; ';
+        }
+        value = css.trim();
       }
-      value = css.trim();
     }
 
     if (value instanceof softHook || value instanceof attrHook) {
