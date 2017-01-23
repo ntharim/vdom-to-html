@@ -56,7 +56,7 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<web-component></web-component>');
   });
 
-  it('should render CSS for style property', function () {
+  it('should render CSS for style property (if not a string)', function () {
     var node = new VNode('div', {
       style: {
         background: 'black',
@@ -66,7 +66,14 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<div style="background: black; color: red;"></div>');
   });
 
-  it('should convert style property to param-case', function () {
+  it('should render CSS for style property (if a string)', function () {
+    var node = new VNode('div', {
+      style: 'background: black; color: red;'
+    });
+    assert.equal(toHTML(node), '<div style="background: black; color: red;"></div>');
+  });
+
+  it('should convert style property to param-case (if not a string)', function () {
     var node = new VNode('div', {
       style: {
         background: 'black',
