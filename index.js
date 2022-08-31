@@ -63,7 +63,7 @@ function openTag(node) {
       var css = '';
       value = extend({}, value);
       for (var styleProp in value) {
-        css += paramCase(styleProp) + ': ' + value[styleProp] + '; ';
+        css += styleProp.match(/^-*/)[0] + paramCase(styleProp) + ': ' + value[styleProp] + '; ';
       }
       value = css.trim();
     }

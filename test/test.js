@@ -77,6 +77,15 @@ describe('toHTML()', function () {
     assert.equal(toHTML(node), '<div style="background: black; color: red; z-index: 1;"></div>');
   });
 
+  it('should render css variables', function () {
+    var node = new VNode('div', {
+      style: {
+        '--opacity': '0.5'
+      }
+    });
+    assert.equal(toHTML(node), '<div style="--opacity: 0.5;"></div>');
+  });
+
   it('should render style element correctly', function(){
     var node = new VNode('style',{},[
         new VText(".logo {background-image: url('/mylogo.png');}")
